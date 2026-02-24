@@ -1,13 +1,16 @@
+// required function for read/write file from "types": ["node"]
 import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+// import entity and matchup outbound port from domain
 import { Ticket } from "../../../domain/entities/Ticket.js";
 import { TicketRepository } from "../../../ports/outbound/TicketRepository.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// outbound adapter(secondary) implements outbound port to read/write data to .json file
 export class JsonTicketRepository implements TicketRepository {
   private filePath = path.join(__dirname, "../../../../data/tickets.json");
 

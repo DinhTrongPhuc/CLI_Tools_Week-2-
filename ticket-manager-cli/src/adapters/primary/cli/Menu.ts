@@ -1,6 +1,9 @@
 //  Adapater/ primary(Driving)/ CLI chứa UI commandline interface - giao diện command
 
+// readline module for entering input from keyboard to terminal
 import readline from "readline";
+
+// inbound(primary) adapter import(connect) to inbound port which is being implements by services
 import { TicketService } from "../../../domain/services/TicketService.js";
 import { TicketStatus } from "../../../domain/entities/Ticket.js";
 import { TicketPriority } from "../../../domain/entities/Ticket.js";
@@ -9,6 +12,7 @@ export class Menu {
   constructor(private service: TicketService) {}
 
   start() {
+    // declaration terminal interface for in/out
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -21,9 +25,13 @@ export class Menu {
       console.log("3. Find Ticket");
       console.log("4. Update Status");
       console.log("5. Update Priority");
+      console.log("6. Update all Detail"); // ongoing
+      console.log("7. Delete Ticket "); //ongoing
       console.log("0. Exit");
+      console.log("-----Ticket Manager-----");
 
-      rl.question("Choose: ", async (answer) => {
+      //question method
+      rl.question("\nCHOOSE: ", async (answer) => {
         try {
           switch (answer) {
             case "1":

@@ -1,10 +1,11 @@
-//serive chứa các business logic phức tạp liên quan đến enitities
+//serive chứa các business logic (function xử lý logic) phức tạp liên quan đến enitities
 
 import { Ticket, TicketPriority, TicketStatus } from "../entities/Ticket.js";
 import { TicketValidator } from "../validators/TicketValidator.js";
 import { TicketRepository } from "../../ports/outbound/TicketRepository.js";
 import { TicketUseCases } from "../../ports/inbound/TicketUseCases.js";
 
+// inbound port is being implement by service - its mean port is defined, ready for actors from outside comunicate with core
 export class TicketService implements TicketUseCases {
   constructor(private readonly repo: TicketRepository) {}
 

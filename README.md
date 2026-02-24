@@ -1,13 +1,13 @@
 # CLI_Tools_Week-2-
 
-CLI tools with Hexagonal Architecture
-This project is handle with only nodejs + typescript
+CLI tools with Hexagonal Architecture and presentation like an menu interface
 
-required installing:
+This project is handle with only nodejs + typescript need required installing for running normally:
+
+bash
 
 ```
 npm install -D @types/node ts-node typescript
-
 ```
 
 packag.json setting: npm init -y
@@ -26,5 +26,6 @@ tsconfig.json setting: npx tsc --init
     "types": ["node"]
 
     "verbatimModuleSyntax": false,
-
 ```
+
+author: Đinh Trọng Phúc
