@@ -7,13 +7,13 @@ This project is handle with only nodejs + typescript need required installing fo
 bash
 
 ```
-npm install -D @types/node ts-node typescript
+npm install -D @types/node ts-node typescript tsx
 ```
 
 packag.json setting: npm init -y
 
 ```
-    "dev": "node --loader ts-node/esm src/main.ts",
+    "dev": "tsx src/main.ts",
 
     "type": "module"
 ```
