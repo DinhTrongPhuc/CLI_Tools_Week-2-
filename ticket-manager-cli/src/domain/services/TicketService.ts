@@ -46,6 +46,7 @@ export class TicketService implements TicketUseCases {
     return ticket;
   }
 
+  //update
   async updateStatus(id: number, status: string) {
     const ticket = await this.findTicket(id);
 

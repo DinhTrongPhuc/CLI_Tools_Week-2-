@@ -27,5 +27,3 @@ tsconfig.json setting: npx tsc --init
 
     "verbatimModuleSyntax": false,
 ```
-
-author: Đinh Trọng Phúc
