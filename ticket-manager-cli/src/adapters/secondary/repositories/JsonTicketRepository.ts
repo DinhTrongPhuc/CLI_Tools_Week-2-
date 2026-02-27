@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 export class JsonTicketRepository implements TicketRepository {
   private filePath = path.join(__dirname, "../../../../data/tickets.json");
 
+  // read/wirte file
   private async ensureFile() {
     try {
       await fs.access(this.filePath);
@@ -33,12 +34,14 @@ export class JsonTicketRepository implements TicketRepository {
     await fs.writeFile(this.filePath, JSON.stringify(data, null, 2));
   }
 
+  //autogenerate Id
   async getNextId(): Promise<number> {
     const tickets = await this.read();
     if (tickets.length === 0) return 1;
     return Math.max(...tickets.map((t) => t.id)) + 1;
   }
 
+  // crud
   async save(ticket: Ticket): Promise<void> {
     const tickets = await this.read();
     tickets.push({

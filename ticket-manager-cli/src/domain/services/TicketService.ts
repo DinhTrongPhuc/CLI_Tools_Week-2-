@@ -70,4 +70,37 @@ export class TicketService implements TicketUseCases {
     await this.repo.update(ticket);
     return ticket;
   }
+
+  async updateTicket(
+    id: number,
+    data: {
+      title: string;
+      description: string;
+      tags: string[];
+      priority: TicketPriority;
+      status: TicketStatus;
+      soLuong: number;
+    },
+  ): Promise<Ticket> {
+    const ticket = await this.repo.findById(id);
+    if (!ticket) {
+      throw new Error("Ticket not found");
+    }
+
+    // validate
+    TicketValidator.validateTitle(data.title);
+    TicketValidator.validateiSoluong(data.soLuong);
+
+    // update fields
+    ticket.title = data.title;
+    ticket.description = data.description;
+    ticket.tags = data.tags;
+    ticket.priority = data.priority;
+    ticket.status = data.status;
+    ticket.iSoLuong = data.soLuong;
+
+    await this.repo.update(ticket);
+
+    return ticket;
+  }
 }

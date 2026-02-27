@@ -9,7 +9,7 @@ export interface TicketRepository {
 
   findById(id: number): Promise<Ticket | null>;
 
-  getNextId(): Promise<number>;
-
   update(ticket: Ticket): Promise<void>;
+
+  getNextId(): Promise<number>;
 }

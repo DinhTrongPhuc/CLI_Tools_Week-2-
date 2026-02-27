@@ -25,7 +25,7 @@ export class Menu {
       console.log("3. Find Ticket");
       console.log("4. Update Status");
       console.log("5. Update Priority");
-      console.log("6. Update all Detail"); // ongoing
+      console.log("6. Update all Detail");
       console.log("7. Delete Ticket "); //ongoing
       console.log("0. Exit");
       console.log("-----Ticket Manager-----");
@@ -99,6 +99,9 @@ export class Menu {
               });
               return;
               rl;
+            case "6":
+              await this.updateFullTicket(rl);
+              break;
             case "0":
               rl.close();
               return;
@@ -129,6 +132,77 @@ export class Menu {
               );
               console.log("Succese Created:", ticket);
               resolve();
+            });
+          });
+        });
+      });
+    });
+  }
+
+  private async updateFullTicket(rl: readline.Interface) {
+    return new Promise<void>((resolve) => {
+      rl.question("Enter ID: ", async (idInput) => {
+        const id = Number(idInput);
+
+        rl.question("New Title: ", async (title) => {
+          rl.question("New Description: ", async (description) => {
+            rl.question("New Tags (comma): ", async (tagsInput) => {
+              rl.question(
+                "New Status (open | in-process | done): ",
+                async (statusInput) => {
+                  rl.question(
+                    "New Priority (low | medium | high): ",
+                    async (priorityInput) => {
+                      rl.question(
+                        "New SoLuong (integer): ",
+                        async (soLuongInput) => {
+                          try {
+                            const soLuong = parseInt(soLuongInput, 10);
+
+                            if (
+                              !Object.values(TicketStatus).includes(
+                                statusInput as TicketStatus,
+                              )
+                            ) {
+                              console.log("Invalid status");
+                              resolve();
+                              return;
+                            }
+
+                            if (
+                              !Object.values(TicketPriority).includes(
+                                priorityInput as TicketPriority,
+                              )
+                            ) {
+                              console.log("Invalid priority");
+                              resolve();
+                              return;
+                            }
+
+                            const updated = await this.service.updateTicket(
+                              id,
+                              {
+                                title,
+                                description,
+                                tags: tagsInput ? tagsInput.split(",") : [],
+                                status: statusInput as TicketStatus,
+                                priority: priorityInput as TicketPriority,
+                                soLuong,
+                              },
+                            );
+
+                            console.log("Updated:", updated);
+                          } catch (err: any) {
+                            console.error("Error:", err.message);
+                          }
+
+                          resolve();
+                        },
+                      );
+                    },
+                  );
+                },
+              );
             });
           });
         });

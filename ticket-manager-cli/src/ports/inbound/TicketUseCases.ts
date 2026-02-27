@@ -1,6 +1,10 @@
 // inbound port
 
-import { Ticket } from "../../domain/entities/Ticket.js";
+import {
+  Ticket,
+  TicketPriority,
+  TicketStatus,
+} from "../../domain/entities/Ticket.js";
 
 export interface TicketUseCases {
   createTicket(
@@ -14,5 +18,15 @@ export interface TicketUseCases {
 
   findTicket(id: number): Promise<Ticket>;
 
-  updateStatus(id: number, status: string): Promise<Ticket>;
+  updateTicket(
+    id: number,
+    data: {
+      title: string;
+      description: string;
+      tags: string[];
+      priority: TicketPriority;
+      status: TicketStatus;
+      soLuong: number;
+    },
+  ): Promise<Ticket>;
 }
