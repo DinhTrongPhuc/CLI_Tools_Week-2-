@@ -103,4 +103,14 @@ export class TicketService implements TicketUseCases {
 
     return ticket;
   }
+
+  async deleteTicket(id: number): Promise<void> {
+    const ticket = await this.repo.findById(id);
+
+    if (!ticket) {
+      throw new Error("Ticket not found");
+    }
+
+    await this.repo.delete(id);
+  }
 }

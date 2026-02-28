@@ -11,5 +11,7 @@ export interface TicketRepository {
 
   update(ticket: Ticket): Promise<void>;
 
+  delete(id: number): Promise<void>;
+
   getNextId(): Promise<number>;
 }

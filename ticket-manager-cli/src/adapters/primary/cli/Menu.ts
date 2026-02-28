@@ -26,7 +26,7 @@ export class Menu {
       console.log("4. Update Status");
       console.log("5. Update Priority");
       console.log("6. Update all Detail");
-      console.log("7. Delete Ticket "); //ongoing
+      console.log("7. Delete Ticket ");
       console.log("0. Exit");
       console.log("-----Ticket Manager-----");
 
@@ -98,10 +98,20 @@ export class Menu {
                 );
               });
               return;
-              rl;
             case "6":
               await this.updateFullTicket(rl);
               break;
+            case "7":
+              rl.question("Enter ID to delete: ", async (id) => {
+                try {
+                  await this.service.deleteTicket(Number(id));
+                  console.log("Ticket delete");
+                } catch (err: any) {
+                  console.log(err.message);
+                }
+                showMenu();
+              });
+              return;
             case "0":
               rl.close();
               return;

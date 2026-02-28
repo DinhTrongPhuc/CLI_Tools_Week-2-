@@ -29,4 +29,6 @@ export interface TicketUseCases {
       soLuong: number;
     },
   ): Promise<Ticket>;
+
+  deleteTicket(id: number): Promise<void>;
 }
