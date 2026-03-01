@@ -34,3 +34,13 @@ tsconfig.json setting: npx tsc --init
     "moduleResolution": "nodenext",
     "esModuleInterop": true
 ```
+
+running project:
+```
+npm run dev
+```
+
+running test domain logic (service) with mock:
+```
+npm run test
+```
