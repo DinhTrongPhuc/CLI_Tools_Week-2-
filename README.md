@@ -8,11 +8,16 @@ bash
 
 ```
 npm install -D @types/node ts-node typescript tsx
+
+**TEST**
+npm install -D jest ts-jest @types/jest
 ```
 
 packag.json setting: npm init -y
 
 ```
+    "test": "jest",
+    "test:watch": "jest --watch"
     "dev": "tsx src/main.ts",
 
     "type": "module"
@@ -23,7 +28,7 @@ tsconfig.json setting: npx tsc --init
 ```
     "module": "nodenext"
     "target": "es2022"
-    "types": ["node"]
+    "types": ["node", "jest"]
 
     "verbatimModuleSyntax": false,
 ```

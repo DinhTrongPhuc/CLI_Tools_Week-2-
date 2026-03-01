@@ -26,4 +26,6 @@ export class MockTicketRepository implements TicketRepository {
     const index = this.tickets.findIndex((t) => t.id === ticket.id);
     if (index !== -1) this.tickets[index] = ticket;
   }
+
+  async delete(id: number): Promise<void> {}
 }

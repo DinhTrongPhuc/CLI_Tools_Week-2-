@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "jest --watch",
     "dev": "tsx src/main.ts",
     "build": "tsc",
     "start": "node dist/main.js"
@@ -13,7 +14,10 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.3.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
