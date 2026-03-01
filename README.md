@@ -16,7 +16,7 @@ npm install -D jest ts-jest @types/jest
 packag.json setting: npm init -y
 
 ```
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "jest --watch"
     "dev": "tsx src/main.ts",
 
@@ -31,4 +31,6 @@ tsconfig.json setting: npx tsc --init
     "types": ["node", "jest"]
 
     "verbatimModuleSyntax": false,
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true
 ```
