@@ -53,4 +53,21 @@ describe("TicketService", () => {
   test("should throw if ticket not found", async () => {
     await expect(service.findTicket(999)).rejects.toThrow("Ticket not found");
   });
+
+  test("should delete ticket successfully", async () => {
+    const ticket = await service.createTicket("Bug delete", "desc", [], 1);
+
+    let tickets = await service.listTickets();
+    expect(tickets.length).toBe(1);
+
+    // delete
+    await service.deleteTicket(ticket.id);
+
+    tickets = await service.listTickets();
+    expect(tickets.length).toBe(0);
+  });
+
+  test("should throw error when deleting non-existing ticket", async () => {
+    await expect(service.deleteTicket(999)).rejects.toThrow("Ticket not found");
+  });
 });
