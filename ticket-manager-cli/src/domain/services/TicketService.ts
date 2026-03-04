@@ -15,25 +15,21 @@ export class TicketService implements TicketUseCases {
     tags: string[],
     iSoLuong: number,
   ) {
-    //bug log while enter input
     TicketValidator.validateTitle(title);
     TicketValidator.validateiSoluong(iSoLuong);
 
-    const id = await this.repo.getNextId();
-
     const ticket = new Ticket(
-      id,
+      0,
       title,
       description,
-      TicketStatus.IN_PROGRESS, // default
-      TicketPriority.MEDIUM, // default
+      TicketStatus.IN_PROGRESS,
+      TicketPriority.MEDIUM,
       tags,
       iSoLuong,
       new Date(),
     );
 
-    await this.repo.save(ticket);
-    return ticket;
+    return await this.repo.save(ticket);
   }
 
   async listTickets() {

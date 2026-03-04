@@ -38,7 +38,7 @@ export class Menu {
               await this.createTicket(rl);
               break;
             case "2":
-              console.table(await this.service.listTickets());
+              await this.listTickets();
               break;
             case "3":
               rl.question("Enter ID: ", async (id) => {
@@ -146,6 +146,26 @@ export class Menu {
           });
         });
       });
+    });
+  }
+
+  private async listTickets() {
+    const tickets = await this.service.listTickets();
+
+    if (!tickets.length) {
+      console.log("\nNo tasks found.\n");
+      return;
+    }
+
+    console.log("\n====================================");
+    console.log("        ODOO PROJECT TASKS");
+    console.log("====================================\n");
+
+    tickets.forEach((t, index) => {
+      console.log(`[${index + 1}] ID: ${t.id}`);
+      console.log(`Title : ${t.title}`);
+      console.log(`Desc  : ${t.description}`);
+      console.log("------------------------------------");
     });
   }
 

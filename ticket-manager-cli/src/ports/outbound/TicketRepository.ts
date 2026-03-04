@@ -3,7 +3,7 @@
 import { Ticket } from "../../domain/entities/Ticket.js";
 
 export interface TicketRepository {
-  save(ticket: Ticket): Promise<void>;
+  save(ticket: Ticket): Promise<Ticket>;
 
   findAll(): Promise<Ticket[]>;
 

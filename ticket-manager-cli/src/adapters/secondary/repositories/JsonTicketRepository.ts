@@ -58,13 +58,26 @@ export class JsonTicketRepository implements TicketRepository {
   }
 
   // crud
-  async save(ticket: Ticket): Promise<void> {
+  async save(ticket: Ticket): Promise<Ticket> {
     const tickets = await this.read();
-    tickets.push({
-      ...ticket,
-      createdAt: ticket.createdAt.toISOString(),
-    });
+
+    const id = await this.getNextId();
+
+    const newTicket = new Ticket(
+      id,
+      ticket.title,
+      ticket.description,
+      ticket.status,
+      ticket.priority,
+      ticket.tags,
+      ticket.iSoLuong,
+      ticket.createdAt,
+    );
+
+    tickets.push(newTicket);
     await this.write(tickets);
+
+    return newTicket;
   }
 
   async findAll(): Promise<Ticket[]> {
