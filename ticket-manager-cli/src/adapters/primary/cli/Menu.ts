@@ -23,8 +23,8 @@ export class Menu {
       console.log("1. Create Ticket");
       console.log("2. List Tickets");
       console.log("3. Find Ticket");
-      console.log("4. Update Status");
-      console.log("5. Update Priority");
+      console.log("4. Update Status - working on Json database only");
+      console.log("5. Update Priority - working on Json database only");
       console.log("6. Update all Detail");
       console.log("7. Delete Ticket ");
       console.log("0. Exit");
