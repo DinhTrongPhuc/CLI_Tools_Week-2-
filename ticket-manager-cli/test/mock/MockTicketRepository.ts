@@ -1,13 +1,15 @@
 //test outbound port with mock data
 import { TicketRepository } from "../../src/ports/outbound/TicketRepository.js";
-import { Ticket } from "../../src/domain/entities/Ticket.js";
+import { Ticket, TicketStatus } from "../../src/domain/entities/Ticket.js";
 
 export class MockTicketRepository implements TicketRepository {
   private tickets: Ticket[] = [];
-  private id = 1;
+  private idCounter = 1;
 
-  async save(ticket: Ticket): Promise<void> {
+  async save(ticket: Ticket): Promise<Ticket> {
+    ticket.id = this.idCounter++;
     this.tickets.push(ticket);
+    return ticket;
   }
 
   async findAll(): Promise<Ticket[]> {
@@ -19,7 +21,7 @@ export class MockTicketRepository implements TicketRepository {
   }
 
   async getNextId(): Promise<number> {
-    return this.id++;
+    return this.idCounter++;
   }
 
   async update(ticket: Ticket): Promise<void> {
@@ -35,5 +37,9 @@ export class MockTicketRepository implements TicketRepository {
     }
 
     this.tickets.splice(index, 1);
+  }
+
+  async findUnprocessed(): Promise<Ticket[]> {
+    return this.tickets.filter((t) => t.status !== TicketStatus.DONE);
   }
 }

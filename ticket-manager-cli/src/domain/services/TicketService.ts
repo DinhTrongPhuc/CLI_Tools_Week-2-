@@ -14,7 +14,7 @@ export class TicketService implements TicketUseCases {
     description: string,
     tags: string[],
     iSoLuong: number,
-  ) {
+  ): Promise<Ticket> {
     TicketValidator.validateTitle(title);
     TicketValidator.validateiSoluong(iSoLuong);
 
@@ -108,5 +108,19 @@ export class TicketService implements TicketUseCases {
     }
 
     await this.repo.delete(id);
+  }
+
+  async getUnprocessedTickets() {
+    return await this.repo.findUnprocessed();
+  }
+
+  async getNewTickets(limit: number = 5) {
+    const repo = this.repo as any;
+
+    if (!repo.findNewTickets) {
+      throw new Error("Repository does not support new ticket query");
+    }
+
+    return repo.findNewTickets(limit);
   }
 }

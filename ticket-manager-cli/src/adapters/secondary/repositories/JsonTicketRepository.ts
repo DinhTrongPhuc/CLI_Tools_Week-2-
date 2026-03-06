@@ -164,4 +164,10 @@ export class JsonTicketRepository implements TicketRepository {
 
     await this.write(tickets);
   }
+
+  async findUnprocessed(): Promise<Ticket[]> {
+    const tickets = await this.read();
+
+    return tickets.filter((ticket) => ticket.status !== "done");
+  }
 }

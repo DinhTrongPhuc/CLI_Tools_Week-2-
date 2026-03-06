@@ -8,10 +8,14 @@ import {
 
 export interface TicketUseCases {
   createTicket(
+    // readonly id: number,
     title: string,
     description: string,
     tags: string[],
     iSoLuong: number,
+    // priority: TicketPriority,
+    // status: TicketStatus,
+    // createdAt: Date,
   ): Promise<Ticket>;
 
   listTickets(): Promise<Ticket[]>;

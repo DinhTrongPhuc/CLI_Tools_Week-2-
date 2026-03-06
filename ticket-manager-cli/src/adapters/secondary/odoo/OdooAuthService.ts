@@ -1,4 +1,4 @@
-import { OdooJsonRpcClient } from "./OdooJsonRpcClient.js";
+import { OdooJsonRpcClient } from "./OdoojsonRpcClient.js";
 export class OdooAuthService {
   constructor(
     private readonly rpc: OdooJsonRpcClient,

@@ -23,13 +23,16 @@ export class Menu {
       console.log("1. Create Ticket");
       console.log("2. List Tickets");
       console.log("3. Find Ticket");
-      console.log("4. Update Status - working on Json database only");
-      console.log("5. Update Priority - working on Json database only");
-      console.log("6. Update all Detail");
-      console.log("7. Delete Ticket ");
+      console.log("4. Delete Ticket ");
+      console.log(" ____ JSON REPOSITORY_________");
+      console.log("5. Update Status");
+      console.log("6. Update Priority");
+      console.log("7. Update all Detail Ticket");
+      console.log("____ ODoo REPOSITORY_________");
+      console.log("8. Unprocessed Tickets");
+      console.log("9. Tickets New");
       console.log("0. Exit");
       console.log("-----Ticket Manager-----");
-
       //question method
       rl.question("\nCHOOSE: ", async (answer) => {
         try {
@@ -46,7 +49,7 @@ export class Menu {
                 showMenu();
               });
               return;
-            case "4":
+            case "5":
               rl.question("Enter ID: ", async (id) => {
                 rl.question(
                   "New Status (open | in-process | done): ",
@@ -72,7 +75,7 @@ export class Menu {
                 );
               });
               return;
-            case "5":
+            case "6":
               rl.question("Enter ID: ", async (id) => {
                 rl.question(
                   "New Priority (low | medium | high): ",
@@ -98,10 +101,10 @@ export class Menu {
                 );
               });
               return;
-            case "6":
+            case "7":
               await this.updateFullTicket(rl);
               break;
-            case "7":
+            case "4":
               rl.question("Enter ID to delete: ", async (id) => {
                 try {
                   await this.service.deleteTicket(Number(id));
@@ -112,6 +115,31 @@ export class Menu {
                 showMenu();
               });
               return;
+            case "8":
+              const tickets = await this.service.getUnprocessedTickets();
+
+              console.log("\nUnprocessed tickets:");
+
+              tickets.forEach((t) => {
+                console.log(`${t.id} - ${t.title}`);
+              });
+              break;
+            case "9":
+              if (!("findNewTickets" in this.service["repo"])) {
+                console.log("This command only works with Odoo repository");
+                break;
+              }
+              const ticket = await this.service.getNewTickets();
+
+              console.table(
+                ticket.map((t: any) => ({
+                  id: t.id,
+                  title: t.title,
+                  createdAt: t.createdAt,
+                })),
+              );
+              break;
+
             case "0":
               rl.close();
               return;

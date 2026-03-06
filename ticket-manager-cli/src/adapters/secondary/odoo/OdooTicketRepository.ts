@@ -1,7 +1,11 @@
 import "dotenv/config";
 import { TicketRepository } from "../../../ports/outbound/TicketRepository.js";
-import { Ticket } from "../../../domain/entities/Ticket.js";
-import { OdooJsonRpcClient } from "./OdooJsonRpcClient.js";
+import {
+  Ticket,
+  TicketPriority,
+  TicketStatus,
+} from "../../../domain/entities/Ticket.js";
+import { OdooJsonRpcClient } from "./OdoojsonRpcClient.js";
 import { OdooAuthService } from "./OdooAuthService.js";
 
 export class OdooTicketRepository implements TicketRepository {
@@ -13,8 +17,9 @@ export class OdooTicketRepository implements TicketRepository {
     private readonly db: string,
     private readonly email: string,
     private readonly apiKey: string,
+    rpcClient?: OdooJsonRpcClient,
   ) {
-    this.rpc = new OdooJsonRpcClient(this.baseUrl);
+    this.rpc = rpcClient ?? new OdooJsonRpcClient(this.baseUrl);
   }
 
   private async init() {
@@ -165,5 +170,64 @@ export class OdooTicketRepository implements TicketRepository {
 
   async getNextId(): Promise<number> {
     return 0; // Odoo auto generate ID
+  }
+
+  async findUnprocessed(): Promise<Ticket[]> {
+    await this.init();
+    const response = await this.rpc.call("object", "execute_kw", [
+      this.db,
+      this.uid,
+      this.apiKey,
+      "project.task",
+      "search_read",
+      [[["stage_id.name", "!=", "Done"]]],
+      {
+        fields: ["id", "name", "description", "create_date"],
+      },
+    ]);
+
+    return response.map((task: any) => {
+      return new Ticket(
+        task.id,
+        task.name,
+        task.description ?? "",
+        TicketStatus.IN_PROGRESS,
+        TicketPriority.MEDIUM,
+        [],
+        0,
+        new Date(task.create_date),
+      );
+    });
+  }
+
+  async findNewTickets(limit: number = 5): Promise<Ticket[]> {
+    await this.init();
+
+    const response = await this.rpc.call("object", "execute_kw", [
+      this.db,
+      this.uid,
+      this.apiKey,
+      "project.task",
+      "search_read",
+      [[]],
+      {
+        fields: ["id", "name", "description", "create_date"],
+        order: "create_date desc",
+        limit: limit,
+      },
+    ]);
+
+    return response.map((task: any) => {
+      return new Ticket(
+        task.id,
+        task.name,
+        task.description ?? "",
+        TicketStatus.IN_PROGRESS,
+        TicketPriority.MEDIUM,
+        [],
+        0,
+        new Date(task.create_date),
+      );
+    });
   }
 }

@@ -14,4 +14,6 @@ export interface TicketRepository {
   delete(id: number): Promise<void>;
 
   getNextId(): Promise<number>;
+
+  findUnprocessed(): Promise<Ticket[]>;
 }
