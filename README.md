@@ -1,33 +1,33 @@
 # Ticket Manager CLI – Hexagonal Architecture + Odoo API
 
-A professional CLI tool for managing tickets/tasks built with **Hexagonal Architecture** and **Odoo API integration**.
+Một công cụ CLI chuyên nghiệp để quản lý tickets/tasks được xây dựng với **Hexagonal Architecture** và tích hợp **Odoo API**.
 
-This application enables support agents to manage tickets through a **Command Line Interface (CLI)** with support for two storage adapters:
+Ứng dụng này cho phép các support agents quản lý tickets thông qua **Command Line Interface (CLI)** với hỗ trợ hai storage adapters:
 
-- **JSON Repository** (local file storage)
+- **JSON Repository** (lưu trữ file cục bộ)
 - **Odoo Repository** (remote Odoo API)
 
-The architecture separates **business logic** from **infrastructure**, making it easy to switch between storage implementations.
+Kiến trúc này tách biệt **business logic** khỏi **infrastructure**, giúp dễ dàng chuyển đổi giữa các storage implementations.
 
 ---
 
-## Summary
+## Tổng Quan
 
-This project demonstrates:
+Dự án này minh họa:
 
-- Implementation of **Hexagonal Architecture** (Ports & Adapters)
-- Integration with **external API (Odoo)**
-- **CLI interface** for ticket management
-- **Repository pattern** with dynamic adapter switching
-- **Comprehensive testing** with unit and integration tests
-- **Mock API testing** without real Odoo dependency
-- **Clean code** with TypeScript and proper separation of concerns
+- Triển khai **Hexagonal Architecture** (Ports & Adapters)
+- Tích hợp với **external API (Odoo)**
+- **CLI interface** để quản lý ticket
+- **Repository pattern** với khả năng chuyển đổi adapter linh hoạt
+- **Comprehensive testing** với unit tests và integration tests
+- **Mock API testing** không phụ thuộc vào Odoo thật
+- **Clean code** với TypeScript và phân tách rõ ràng các concerns
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Kiến Trúc
 
-This project follows **Hexagonal Architecture (Ports & Adapters)** pattern.
+Dự án này tuân theo mô hình **Hexagonal Architecture (Ports & Adapters)**.
 
 ```
 test/
@@ -36,7 +36,7 @@ test/
 src/
 ├── domain/                    # Core business logic
 │   ├── entities/              # Business entities (Ticket)
-│   ├── services/              # Business rules and operations
+│   ├── services/              # Business rules và operations
 │   └── validators/            # Domain validation logic
 │
 ├── ports/                     # Interfaces (contracts)
@@ -48,38 +48,38 @@ src/
     └── secondary/             # Data adapters (JSON / Odoo)
 ```
 
-### Layer Responsibilities
+### Trách Nhiệm Của Từng Layer
 
-| Layer        | Responsibility                       | Examples                                                |
+| Layer        | Trách Nhiệm                          | Ví Dụ                                                   |
 | ------------ | ------------------------------------ | ------------------------------------------------------- |
 | **Domain**   | Business rules, entities, validation | `TicketService`, `Ticket` entity, validators            |
-| **Ports**    | Define interfaces for communication  | `interface TicketUsecase`, `interface TicketRepository` |
-| **Adapters** | Implement external systems           | CLI, JSON Repository, Odoo Repository                   |
+| **Ports**    | Định nghĩa interfaces để giao tiếp   | `interface TicketUsecase`, `interface TicketRepository` |
+| **Adapters** | Triển khai các hệ thống bên ngoài    | CLI, JSON Repository, Odoo Repository                   |
 
-### Why Hexagonal Architecture?
+### Tại Sao Sử Dụng Hexagonal Architecture?
 
-- **Independence**: Business logic is independent of frameworks and databases
-- **Testability**: Easy to test with mock implementations
-- **Flexibility**: Switch between JSON and Odoo without changing domain code
-- **Maintainability**: Clear separation of concerns
+- **Independence**: Business logic độc lập với frameworks và databases
+- **Testability**: Dễ dàng test với mock implementations
+- **Flexibility**: Chuyển đổi giữa JSON và Odoo mà không thay đổi domain code
+- **Maintainability**: Phân tách rõ ràng các concerns
 
 ---
 
-## ✨ Project Features
+## ✨ Tính Năng Của Dự Án
 
-### Ticket Operations
+### Các Thao Tác Với Ticket
 
-- Create new ticket
-- List all tickets
-- Find ticket by ID
-- Delete ticket
-- Show unprocessed tickets
-- Show newest ticket
-- Update ticket status/ priority/ all details - JSon Repository
+- Tạo ticket mới
+- Liệt kê tất cả tickets
+- Tìm ticket theo ID
+- Xóa ticket
+- Hiển thị các tickets chưa xử lý
+- Hiển thị ticket mới nhất
+- Cập nhật status/ priority/ tất cả thông tin chi tiết - JSON Repository
 
 ### CLI Commands
 
-The CLI supports both **interactive menu** and **direct command-line commands**.
+CLI hỗ trợ cả **interactive menu** và **direct command-line commands**.
 
 #### Interactive Mode
 
@@ -87,46 +87,46 @@ The CLI supports both **interactive menu** and **direct command-line commands**.
 npm run dev
 ```
 
-Then select from the menu:
+Sau đó chọn từ menu:
 
-1. Create new ticket
-2. List all tickets
-3. Find ticket by ID
-4. Delete ticket
-5. Show unprocessed tickets
+1. Tạo ticket mới
+2. Liệt kê tất cả tickets
+3. Tìm ticket theo ID
+4. Xóa ticket
+5. Hiển thị các tickets chưa xử lý
 
 #### Command Mode
 
 ```bash
-# List all tickets
+# Liệt kê tất cả tickets
 npm run dev ticket list
 
-# Create new ticket
+# Tạo ticket mới
 npm run dev ticket new
 
-# Show ticket by ID
+# Hiển thị ticket theo ID
 npm run dev ticket show <id>
 
-# Show unprocessed tickets
+# Hiển thị tickets chưa xử lý
 npm run dev ticket unprocessed
 
-# Delete ticket
+# Xóa ticket
 npm run dev ticket delete <id>
 ```
 
 ---
 
-## 🔌 Odoo API Integration
+## 🔌 Tích Hợp Odoo API
 
-The project integrates with **Odoo JSON-RPC API** to manage tasks remotely.
+Dự án tích hợp với **Odoo JSON-RPC API** để quản lý tasks từ xa.
 
-### Supported Operations
+### Các Thao Tác Được Hỗ Trợ
 
-- Authenticate with Odoo using API key
-- Retrieve tasks from `project.task` model
-- Create new task
-- Delete task
-- Query unprocessed tasks
+- Xác thực với Odoo sử dụng API key
+- Truy xuất tasks từ model `project.task`
+- Tạo task mới
+- Xóa task
+- Truy vấn các tasks chưa xử lý
 
 ### Odoo Endpoint
 
@@ -134,22 +134,22 @@ The project integrates with **Odoo JSON-RPC API** to manage tasks remotely.
 https://your-domain.odoo.com/jsonrpc
 ```
 
-### Odoo Data Mapping
+### Ánh Xạ Dữ Liệu Odoo
 
-| Odoo Field    | Ticket Field  | Description       |
-| ------------- | ------------- | ----------------- |
-| `id`          | `id`          | Unique identifier |
-| `name`        | `title`       | Task title        |
-| `description` | `description` | Task details      |
-| `priority`    | `priority`    | Priority level    |
-| `stage_id`    | `status`      | Task stage/status |
-| `tag_ids`     | `tags`        | Associated tags   |
+| Odoo Field    | Ticket Field  | Mô Tả                     |
+| ------------- | ------------- | ------------------------- |
+| `id`          | `id`          | Định danh duy nhất        |
+| `name`        | `title`       | Tiêu đề task              |
+| `description` | `description` | Chi tiết task             |
+| `priority`    | `priority`    | Mức độ ưu tiên            |
+| `stage_id`    | `status`      | Giai đoạn/trạng thái task |
+| `tag_ids`     | `tags`        | Các tags liên quan        |
 
 ---
 
-## ⚙️ Environment Configuration
+## ⚙️ Cấu Hình Environment
 
-Create a `.env` file in the project root:
+Tạo file `.env` trong thư mục gốc của dự án:
 
 ```env
 # Repository Mode
@@ -162,20 +162,20 @@ ODOO_EMAIL=your_email@example.com
 ODOO_API_KEY=your_api_key_here
 ```
 
-### Adapter Switching
+### Chuyển Đổi Adapter
 
-The project can dynamically switch between repositories:
+Dự án có thể chuyển đổi repositories một cách linh hoạt:
 
 ```env
-USE_ODOO=true   # → Use Odoo API repository
-USE_ODOO=false  # → Use JSON file repository
+USE_ODOO=true   # → Sử dụng Odoo API repository
+USE_ODOO=false  # → Sử dụng JSON file repository
 ```
 
-This is implemented using the **RepositoryFactory** pattern in `src/adapters/secondary/RepositoryFactory.ts`.
+Điều này được triển khai thông qua pattern **RepositoryFactory** trong `src/adapters/secondary/RepositoryFactory.ts`.
 
 ---
 
-## 🚀 Running the Project
+## 🚀 Chạy Dự Án
 
 ### Development Mode
 
@@ -183,19 +183,19 @@ This is implemented using the **RepositoryFactory** pattern in `src/adapters/sec
 npm run dev
 ```
 
-### Run Specific Command
+### Chạy Command Cụ Thể
 
 ```bash
-# List tickets
+# Liệt kê tickets
 npm run dev ticket list
 
-# Create ticket
+# Tạo ticket
 npm run dev ticket new
 
-# Show ticket
+# Hiển thị ticket
 npm run dev ticket show 1
 
-# Delete ticket
+# Xóa ticket
 npm run dev ticket delete 1
 ```
 
@@ -203,15 +203,15 @@ npm run dev ticket delete 1
 
 ## 🧪 Testing
 
-The project uses **Jest** for comprehensive testing.
+Dự án sử dụng **Jest** cho comprehensive testing.
 
-### Run All Tests
+### Chạy Tất Cả Tests
 
 ```bash
 npm run test
 ```
 
-### Run Tests in Watch Mode
+### Chạy Tests Ở Watch Mode
 
 ```bash
 npm run test:watch
@@ -219,23 +219,23 @@ npm run test:watch
 
 ---
 
-## 🧪 Testing Strategy
+## 🧪 Chiến Lược Testing
 
 ### 1. Domain Tests (Unit Tests)
 
-Unit tests verify **business logic in the domain layer** using mock repositories.
+Unit tests kiểm tra **business logic trong domain layer** sử dụng mock repositories.
 
-**Tested Scenarios:**
+**Các Kịch Bản Được Kiểm Tra:**
 
-- Create ticket with valid data
-- Update ticket status
-- Delete ticket
-- Validation logic (required fields, priority values)
-- Business rules enforcement
+- Tạo ticket với dữ liệu hợp lệ
+- Cập nhật ticket status
+- Xóa ticket
+- Validation logic (các trường bắt buộc, giá trị priority)
+- Thực thi business rules
 
-**Location:** `test/domain/`
+**Vị Trí:** `test/domain/`
 
-**Example:**
+**Ví Dụ:**
 
 ```typescript
 describe("TicketService", () => {
@@ -264,23 +264,23 @@ describe("TicketService", () => {
 
 ### 2. Integration Tests (Mock Odoo API)
 
-Integration tests simulate Odoo API behavior using **MockOdooRpcClient**.
+Integration tests mô phỏng hành vi của Odoo API sử dụng **MockOdooRpcClient**.
 
-The mock client emulates Odoo RPC responses without calling the real API.
+Mock client mô phỏng các responses từ Odoo RPC mà không gọi đến API thật.
 
-**Tested Scenarios:**
+**Các Kịch Bản Được Kiểm Tra:**
 
-- Fetch tasks from Odoo
-- Create tasks with Odoo format
-- Delete tasks
-- Query unprocessed tasks
-- Error handling
+- Lấy tasks từ Odoo
+- Tạo tasks với định dạng Odoo
+- Xóa tasks
+- Truy vấn các tasks chưa xử lý
+- Xử lý lỗi
 
-**Location:** `test/integration/`
+**Vị Trí:** `test/integration/`
 
 **Mock Implementation:** `test/mock/MockOdooRpcClient.ts`
 
-**Example:**
+**Ví Dụ:**
 
 ```typescript
 describe("OdooTicketRepository", () => {
@@ -295,9 +295,9 @@ describe("OdooTicketRepository", () => {
 
 ---
 
-## 🔄 Data Flow
+## 🔄 Luồng Dữ Liệu
 
-### Example Flow: List All Tickets
+### Ví Dụ Luồng: Liệt Kê Tất Cả Tickets
 
 ```
 npm run dev ticket list
@@ -316,19 +316,19 @@ Odoo RPC Client
          ↓
 Odoo JSON-RPC API
          ↓
-Response flows back up
+Response trả ngược lại
 ```
 
-### Key Benefits of This Flow
+### Lợi Ích Chính Của Luồng Này
 
-- **Business logic** (`TicketService`) is independent of infrastructure
-- **Repositories** can be swapped without changing domain code
-- **Testing** is easy with mock implementations
-- **Flexibility** to add new adapters (e.g., PostgreSQL, MongoDB)
+- **Business logic** (`TicketService`) độc lập với infrastructure
+- **Repositories** có thể được thay thế mà không cần thay đổi domain code
+- **Testing** dễ dàng với mock implementations
+- **Flexibility** để thêm adapters mới (ví dụ: PostgreSQL, MongoDB)
 
 ---
 
-## 📊 Example Ticket Data
+## 📊 Ví Dụ Dữ Liệu Ticket
 
 ```json
 {
@@ -343,21 +343,21 @@ Response flows back up
 }
 ```
 
-### Status Values
+### Các Giá Trị Status
 
-- `in_progress` – Being worked on
-- `done` – Completed
-- `open` – Available
+- `in_progress` – Đang được xử lý
+- `done` – Đã hoàn thành
+- `open` – Có sẵn
 
-### Priority Values
+### Các Giá Trị Priority
 
-- `low` – Low priority
-- `medium` – Medium priority
-- `high` – High priority
+- `low` – Ưu tiên thấp
+- `medium` – Ưu tiên trung bình
+- `high` – Ưu tiên cao
 
 ---
 
-## 📁 Project Structure
+## 📁 Cấu Trúc Dự Án
 
 ```
 ticket-manager-cli/
@@ -397,9 +397,9 @@ ticket-manager-cli/
 
 ---
 
-## 📦 Installation
+## 📦 Cài Đặt
 
-### Install Dependencies
+### Cài Đặt Dependencies
 
 ```bash
 npm install
@@ -419,11 +419,11 @@ npm install -D jest ts-jest @types/jest
 
 ---
 
-## 📝 Project Configuration
+## 📝 Cấu Hình Dự Án
 
-The project uses TypeScript with ES modules support.
+Dự án sử dụng TypeScript với hỗ trợ ES modules.
 
-**Important settings in `tsconfig.json`:**
+**Các cài đặt quan trọng trong `tsconfig.json`:**
 
 ```json
 {
@@ -438,7 +438,7 @@ The project uses TypeScript with ES modules support.
 }
 ```
 
-**settings in `package.json`:**
+**Cài đặt trong `package.json`:**
 
 ```json
 {
@@ -450,3 +450,68 @@ The project uses TypeScript with ES modules support.
   "type": "module"
 }
 ```
+
+---
+
+# Tìm hiểu về MCP và Knowledge Base (vector)
+
+## 1. MCP: Model Context Protocol
+
+- Là giao thức open source đóng vai trò làm cầu nối cho phép các mô hình AI (LLM) dễ dàng kết nối, truy cập vào dữ liệu và sử dụng công cụ từ các hệ thống bên ngoài một cách an toàn và nhất quán.
+
+- Chức năng: giúp AI "thông minh hơn" hiểu rõ ngữ cảnh hơn, truy cập dữ liệu thời gian thực và thực hiện các tác vụ phức tạp hơn thay vì để AI tự phản hồi bằng dữ liệu được đào tạo sẵn.
+
+### Ví Dụ:
+
+- Truyền thống (Không MCP): Khi cần AI tóm tắt nội dung Email, AI ko có quyền truy cập -> người dùng phải làm việc thủ công từ đăng nhập, tìm mail, copy nội dung, dán lại cho AI để AI làm việc => tốn thời gian, phụ thuộc vào con người, giới hạn context khi chỉ xử lý từng mail một.
+
+- AI Agent có sử dụng MCP: Khi cần AI tóm tắt nội dung Email, AI tự truy cập vào mail, lấy mail, đọc và tóm tắt => tiết kiệm thời gian, tăng độ chính xác khi phân tích data, tối ưu khả năng từ "suy nghĩ" đến "hành động".
+
+- [Model Context Protocol (MCP)-Image](https://base.vn/wp-content/uploads/2025/05/tai-sao-mcp-lai-quan-trong-1536x864.webp)
+
+### Sử dụng MCP khi nào ?
+
+- MCP phù hợp khi bạn cần một hệ thống linh hoạt, có khả năng kết nối đa công cụ và xử lý ngữ cảnh động. Đây là lựa chọn lý tưởng cho trợ lý AI, hệ thống phân tích dữ liệu hoặc các ứng dụng thông minh trong doanh nghiệp.
+
+### Cơ chết hoạt động:
+
+#### MCP hoạt động dựa trên mô hình 3 thành phần: Host, Client, Server
+
+- MCP Host: là trung tâm điều phối, thường là chatbot hoặc ứng dụng AI như Claude. Host chịu trách nhiệm kiểm soát quyền truy cập và xác - thực kết nối.
+
+- MCP Client: là ứng dụng trung gian, giúp truyền yêu cầu và phản hồi giữa AI và các server khác nhau.
+
+- MCP Server: là nơi kết nối với các công cụ hoặc nguồn dữ liệu cụ thể như Slack, Google Drive hay cơ sở dữ liệu nội bộ. Mỗi server có thể cung cấp các khả năng riêng như đọc tệp, gửi tin nhắn hoặc truy vấn dữ liệu.
+
+---
+
+## 2. Knowledge Base (Vector)
+
+- Là hệ thống lưu trữ và tìm kiếm thông tin dựa trên vector embeddings (biểu diễn vector).
+
+- **Khái niệm cơ bản**: Thay vì lưu trữ dữ liệu dạng văn bản thuần túy và tìm kiếm theo từ khóa chính xác, vector knowledge base chuyển đổi thông tin thành các vector số trong không gian nhiều chiều. Mỗi đoạn văn bản, câu hỏi, hoặc tài liệu được biểu diễn thành một vector, và độ tương đồng giữa các thông tin được đo bằng khoảng cách giữa các vector này.
+
+### Cách hoạt động:
+
+- **Embedding**: Văn bản được chuyển đổi thành vector thông qua các mô hình AI (như BERT, OpenAI embeddings)
+
+- **Lưu trữ**: Các vector được lưu trong vector database (như Pinecone, Weaviate, Milvus, Qdrant)
+
+- **Tìm kiếm**: Khi có truy vấn, hệ thống chuyển câu hỏi thành vector và tìm các vector gần nhất (similarity search)
+
+- [Vector Knowledge Base - Image](https://kb.pavietnam.vn/wp-content/uploads/2025/03/vector-database.png)
+
+### Ưu điểm:
+
+- **Tìm kiếm ngữ nghĩa**: Không chỉ khớp từ khóa, vector embedding học được mối quan hệ ngữ nghĩa, hiểu được ý nghĩa giữa các từ trong không gian vector. (Vua - hoàng hậu gần nhau hơn là chó-mèo-động vật)
+- **Xử lý đa ngôn ngữ**: Vector có thể biểu diễn ý nghĩa xuyên ngôn ngữ, câu hỏi tiếng Anh vẫn tìm được tài liệu tiếng Việt vì chúng có ý nghĩa tương đương.
+- **Linh hoạt**: Tìm được thông tin liên quan ngay cả khi cách diễn đạt khác nhau
+
+**-> Vector knowledge base giúp hệ thống AI "hiểu" ngôn ngữ giống cách con người hơn - dựa trên ý nghĩa và ngữ cảnh thay vì chỉ khớp từ khóa máy móc. Đây là lý do tại sao các chatbot hiện đại có thể trả lời câu hỏi linh hoạt và chính xác hơn nhiều so với các hệ thống tìm kiếm truyền thống.**
+
+### Ứng dụng
+
+- Chatbot và trợ lý AI (RAG - Retrieval Augmented Generation)
+- Hệ thống gợi ý sản phẩm
+- Tìm kiếm tài liệu doanh nghiệp
+- Phân tích và phân loại văn bản
